@@ -1,5 +1,5 @@
-import mysql, { Pool, PoolConnection } from 'mysql2/promise'
-import { propertiesConectionDB } from './config'
+import mysql, { Pool, type PoolConnection } from 'mysql2/promise'
+import { propertiesConnectionDB } from '../config'
 
 /* using the singleton design pattern to have a single instance of the database connection */
 class Database {
@@ -21,7 +21,7 @@ class Database {
   // connect to the database
   public async connect(): Promise<PoolConnection> {
     if (!this.pool) {
-      this.pool = mysql.createPool(propertiesConectionDB)
+      this.pool = mysql.createPool(propertiesConnectionDB)
     }
 
     return this.pool.getConnection()
