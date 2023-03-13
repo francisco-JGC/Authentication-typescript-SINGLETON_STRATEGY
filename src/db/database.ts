@@ -1,5 +1,5 @@
 import mysql, { Pool, type PoolConnection } from 'mysql2/promise'
-import { propertiesConnectionDB } from '../config'
+import { propertiesConnectionDB } from '../config/config'
 
 /* using the singleton design pattern to have a single instance of the database connection */
 class Database {
