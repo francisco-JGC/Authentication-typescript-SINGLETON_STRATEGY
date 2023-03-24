@@ -1,4 +1,4 @@
-import { ErrorResponse } from '../../../utils/handleErrorModels'
+import { ErrorResponse } from '../../utils/handleErrorModels'
 
 export interface IUser {
   username: string

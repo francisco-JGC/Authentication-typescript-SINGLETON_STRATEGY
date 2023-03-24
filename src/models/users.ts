@@ -6,7 +6,7 @@ import {
   handleInternalServerError,
   handleNotFound
 } from '../utils/handleErrorModels'
-import { IGetUserById, IInsertUser, IUsersModel } from './types/user'
+import { IGetUserById, IInsertUser, IUsersModel } from './types'
 
 export class UsersModel implements IUsersModel {
   async getUsers(): Promise<IGetUserById[] | ErrorResponse> {
