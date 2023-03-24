@@ -2,14 +2,14 @@ import { Context } from '../db/context'
 import { InsertStrategy } from '../db/strategies/insertStrategy'
 import { SelectStrategy } from '../db/strategies/selectStrategy'
 import {
-  ErrorResponse,
   handleInternalServerError,
-  handleNotFound
+  handleNotFound,
+  Response
 } from '../utils/handleErrorModels'
-import { IGetUserById, IInsertUser, IUsersModel } from './types'
+import { IGetUserById, IInsertUser, IUsersModel } from './types/user'
 
 export class UsersModel implements IUsersModel {
-  async getUsers(): Promise<IGetUserById[] | ErrorResponse> {
+  async getUsers(): Promise<IGetUserById[] | Response> {
     try {
       const context = new Context(new SelectStrategy())
       return await context.execute('SELECT id, username, email FROM users', [])
@@ -18,7 +18,7 @@ export class UsersModel implements IUsersModel {
     }
   }
 
-  async insertUser(user: IInsertUser): Promise<IInsertUser | ErrorResponse> {
+  async insertUser(user: IInsertUser): Promise<IInsertUser | Response> {
     try {
       const context = new Context(new InsertStrategy())
       return await context.execute('INSERT INTO users SET ?', [user])
@@ -27,7 +27,7 @@ export class UsersModel implements IUsersModel {
     }
   }
 
-  async getUserById(id: string): Promise<IGetUserById | ErrorResponse> {
+  async getUserById(id: string): Promise<IGetUserById | Response> {
     try {
       const context = new Context(new SelectStrategy())
       const response = await context.execute(
@@ -47,7 +47,7 @@ export class UsersModel implements IUsersModel {
   async updateUserById(
     id: string,
     user: IInsertUser
-  ): Promise<IGetUserById | ErrorResponse> {
+  ): Promise<IGetUserById | Response> {
     try {
       const context = new Context(new InsertStrategy())
       const response = await context.execute(

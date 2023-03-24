@@ -1,4 +1,4 @@
-import { ErrorResponse } from '../../utils/handleErrorModels'
+import { Response } from '../../utils/handleErrorModels'
 
 export interface IUser {
   username: string
@@ -14,11 +14,11 @@ export interface IGetUserById extends IUser {
 }
 
 export interface IUsersModel {
-  getUsers(): Promise<IGetUserById[] | ErrorResponse>
-  insertUser(user: IInsertUser): Promise<IInsertUser | ErrorResponse>
-  getUserById(id: string): Promise<IGetUserById | ErrorResponse>
+  getUsers(): Promise<IGetUserById[] | Response>
+  insertUser(user: IInsertUser): Promise<IInsertUser | Response>
+  getUserById(id: string): Promise<IGetUserById | Response>
   updateUserById(
     id: string,
     user: IInsertUser
-  ): Promise<IGetUserById | ErrorResponse>
+  ): Promise<IGetUserById | Response>
 }
