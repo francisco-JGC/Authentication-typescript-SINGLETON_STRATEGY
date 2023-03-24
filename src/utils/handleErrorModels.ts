@@ -1,10 +1,10 @@
-type ErrorHTTP<T = unknown> =
+export type ErrorHTTP<T = unknown> =
   | { status: 401; message: string }
   | { status: 404; message: string }
   | { status: 400; message: string; data?: T }
   | { status: 500; message: string; details: string; data?: T }
 
-interface ErrorResponse<T = unknown> {
+export interface ErrorResponse<T = unknown> {
   status: number
   message: string
   data?: T
