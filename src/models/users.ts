@@ -2,21 +2,23 @@ import { Context } from '../db/context'
 import { InsertStrategy } from '../db/strategies/insertStrategy'
 import { SelectStrategy } from '../db/strategies/selectStrategy'
 import {
+  ErrorResponse,
   handleInternalServerError,
   handleNotFound
 } from '../utils/handleErrorModels'
+import { IGetUserById, IInsertUser, IUsersModel } from './types/user'
 
-export class UsersModel {
-  async getUsers(): Promise<any> {
+export class UsersModel implements IUsersModel {
+  async getUsers(): Promise<IGetUserById[] | ErrorResponse> {
     try {
       const context = new Context(new SelectStrategy())
-      return await context.execute('SELECT * FROM users', [])
+      return await context.execute('SELECT id, username, email FROM users', [])
     } catch (error: any) {
       return await handleInternalServerError(error.message)
     }
   }
 
-  async insertUser(user: any): Promise<any> {
+  async insertUser(user: IInsertUser): Promise<IInsertUser | ErrorResponse> {
     try {
       const context = new Context(new InsertStrategy())
       return await context.execute('INSERT INTO users SET ?', [user])
@@ -25,11 +27,11 @@ export class UsersModel {
     }
   }
 
-  async getUserById(id: string): Promise<any> {
+  async getUserById(id: string): Promise<IGetUserById | ErrorResponse> {
     try {
       const context = new Context(new SelectStrategy())
       const response = await context.execute(
-        'SELECT * FROM users WHERE id = ?',
+        'SELECT id, username, email FROM users WHERE id = ?',
         [id]
       )
       if (response.length === 0) {
@@ -42,7 +44,10 @@ export class UsersModel {
     }
   }
 
-  async updateUserById(id: string, user: any): Promise<any> {
+  async updateUserById(
+    id: string,
+    user: IInsertUser
+  ): Promise<IGetUserById | ErrorResponse> {
     try {
       const context = new Context(new InsertStrategy())
       const response = await context.execute(
