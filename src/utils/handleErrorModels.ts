@@ -30,4 +30,42 @@ const handleError = <T = unknown>(
   return Promise.reject({ status, message, data })
 }
 
-export { handleError }
+export const handleNotFound = async <T = unknown>(): Promise<
+  ErrorResponse<T>
+> => {
+  return await handleError<T>({
+    status: 404,
+    message: 'Not Found'
+  })
+}
+
+export const handleBadRequest = async <T = unknown>(
+  data: T
+): Promise<ErrorResponse<T>> => {
+  return await handleError<T>({
+    status: 400,
+    message: 'Bad Request',
+    data
+  })
+}
+
+export const handleUnauthorized = async <T = unknown>(
+  data: T
+): Promise<ErrorResponse<T>> => {
+  return await handleError<T>({
+    status: 401,
+    message: 'Unauthorized'
+  })
+}
+
+export const handleInternalServerError = async <T = unknown>(
+  data: T
+): Promise<ErrorResponse<T>> => {
+  return await handleError<T>({
+    status: 500,
+    message: 'Internal Server Error',
+    details: data as any
+  })
+}
+
+export default handleError
